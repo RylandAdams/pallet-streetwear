@@ -1,25 +1,42 @@
-import logo from './logo.svg';
-import './App.css';
+import React from 'react';
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+import HomePage from './pages/HomePage';
+import CuratedPage from './pages/CuratedPage';
+import InventoryPage from './pages/InventoryPage';
+import AccountPage from './pages/AccountPage';
+import { AuthProvider } from './contexts/AuthContext';
+import { CartProvider } from './contexts/CartContext';
+import { PreferencesProvider } from './contexts/PreferencesContext';
 
 function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+	return (
+		<Router>
+			<AuthProvider>
+				<CartProvider>
+					<PreferencesProvider>
+						<Routes>
+							<Route
+								path='/'
+								element={<HomePage />}
+							/>
+							<Route
+								path='/curated'
+								element={<CuratedPage />}
+							/>
+							<Route
+								path='/inventory'
+								element={<InventoryPage />}
+							/>
+							<Route
+								path='/account'
+								element={<AccountPage />}
+							/>
+						</Routes>
+					</PreferencesProvider>
+				</CartProvider>
+			</AuthProvider>
+		</Router>
+	);
 }
 
 export default App;
